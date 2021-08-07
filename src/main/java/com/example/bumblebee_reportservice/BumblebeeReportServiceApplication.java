@@ -16,6 +16,7 @@ public class BumblebeeReportServiceApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(BumblebeeReportServiceApplication.class, args);
+
     }
 
     @KafkaListener(topics = "reports_data", groupId = "1")

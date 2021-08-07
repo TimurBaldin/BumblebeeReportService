@@ -7,6 +7,7 @@ public class KafkaDto {
     private Long containerId;
     private String containerName;
     private Boolean isAuthenticated;
+    private ReportType reportType;
     private List<Map<String, List<String>>> data;
 
     public Long getContainerId() {
@@ -41,12 +42,21 @@ public class KafkaDto {
         this.data = data;
     }
 
+    public ReportType getReportType() {
+        return reportType;
+    }
+
+    public void setReportType(ReportType reportType) {
+        this.reportType = reportType;
+    }
+
     @Override
     public String toString() {
         return "KafkaDto{" +
                 "containerId=" + containerId +
                 ", containerName='" + containerName + '\'' +
                 ", isAuthenticated=" + isAuthenticated +
+                ", reportType=" + reportType +
                 '}';
     }
 }
