@@ -1,4 +1,4 @@
-package com.example.bumblebee_reportservice.services.dto;
+package com.bumblebee_reportservice.services.dto;
 
 public enum ReportType {
 

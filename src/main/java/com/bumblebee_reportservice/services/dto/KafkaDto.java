@@ -1,4 +1,4 @@
-package com.example.bumblebee_reportservice.services.dto;
+package com.bumblebee_reportservice.services.dto;
 
 import java.util.List;
 import java.util.Map;

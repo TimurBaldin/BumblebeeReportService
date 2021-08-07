@@ -1,6 +1,6 @@
-package com.example.bumblebee_reportservice.repository;
+package com.bumblebee_reportservice.repository;
 
-import com.example.bumblebee_reportservice.services.dto.ReportType;
+import com.bumblebee_reportservice.services.dto.ReportType;
 import com.mongodb.DBObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;

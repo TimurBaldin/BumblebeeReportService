@@ -1,8 +1,8 @@
-package com.example.bumblebee_reportservice.services;
+package com.bumblebee_reportservice.services;
 
-import com.example.bumblebee_reportservice.repository.ReportRepository;
-import com.example.bumblebee_reportservice.services.dto.KafkaDto;
-import com.example.bumblebee_reportservice.services.handlers.ReportHandler;
+import com.bumblebee_reportservice.repository.ReportRepository;
+import com.bumblebee_reportservice.services.dto.KafkaDto;
+import com.bumblebee_reportservice.services.handlers.ReportHandler;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import org.springframework.beans.factory.annotation.Autowired;

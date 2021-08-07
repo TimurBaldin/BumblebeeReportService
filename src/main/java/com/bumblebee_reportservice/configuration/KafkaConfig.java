@@ -1,4 +1,4 @@
-package com.example.bumblebee_reportservice.configuration;
+package com.bumblebee_reportservice.configuration;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;

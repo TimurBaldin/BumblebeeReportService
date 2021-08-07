@@ -1,4 +1,4 @@
-package com.example.bumblebee_reportservice;
+package com.bumblebee_reportservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

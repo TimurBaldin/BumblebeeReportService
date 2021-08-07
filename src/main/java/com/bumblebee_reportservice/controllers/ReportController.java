@@ -1,6 +1,6 @@
-package com.example.bumblebee_reportservice.controllers;
+package com.bumblebee_reportservice.controllers;
 
-import com.example.bumblebee_reportservice.services.dto.ReportType;
+import com.bumblebee_reportservice.services.dto.ReportType;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
