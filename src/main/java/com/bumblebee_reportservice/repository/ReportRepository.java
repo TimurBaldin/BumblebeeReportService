@@ -23,7 +23,7 @@ public class ReportRepository {
     }
 
     public void getData() {
-        //TODO Возвращаем ресурс по имени файла и его ContainerId
+        //TODO Возвращаем ресурс по имени файла и его cuid
     }
 
 }

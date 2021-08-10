@@ -4,18 +4,18 @@ import java.util.List;
 import java.util.Map;
 
 public class KafkaDto {
-    private Long containerId;
+    private String cuid;
     private String containerName;
     private Boolean isAuthenticated;
     private ReportType reportType;
     private List<Map<String, List<String>>> data;
 
-    public Long getContainerId() {
-        return containerId;
+    public String getCuid() {
+        return cuid;
     }
 
-    public void setContainerId(Long containerId) {
-        this.containerId = containerId;
+    public void setCuid(String cuid) {
+        this.cuid = cuid;
     }
 
     public String getContainerName() {
@@ -34,14 +34,6 @@ public class KafkaDto {
         isAuthenticated = authenticated;
     }
 
-    public List<Map<String, List<String>>> getData() {
-        return data;
-    }
-
-    public void setData(List<Map<String, List<String>>> data) {
-        this.data = data;
-    }
-
     public ReportType getReportType() {
         return reportType;
     }
@@ -50,10 +42,18 @@ public class KafkaDto {
         this.reportType = reportType;
     }
 
+    public List<Map<String, List<String>>> getData() {
+        return data;
+    }
+
+    public void setData(List<Map<String, List<String>>> data) {
+        this.data = data;
+    }
+
     @Override
     public String toString() {
         return "KafkaDto{" +
-                "containerId=" + containerId +
+                "cuid='" + cuid + '\'' +
                 ", containerName='" + containerName + '\'' +
                 ", isAuthenticated=" + isAuthenticated +
                 ", reportType=" + reportType +

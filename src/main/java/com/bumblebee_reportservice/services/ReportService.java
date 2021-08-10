@@ -18,7 +18,7 @@ public class ReportService {
     private final ReportHandler<List<Map<String, List<String>>>, byte[]> reportHandler;
     private final ReportRepository repository;
 
-    private static final String KEY_CONTAINER_ID = "containerId";
+    private static final String KEY_CONTAINER_ID = "cuid";
     private static final String KEY_CONTAINER_NAME = "containerName";
 
     @Autowired
@@ -32,7 +32,7 @@ public class ReportService {
         byte[] data = reportHandler.buildReport(dto.getData());
 
         DBObject metaData = new BasicDBObject();
-        metaData.put(KEY_CONTAINER_ID, dto.getContainerId());
+        metaData.put(KEY_CONTAINER_ID, dto.getCuid());
         metaData.put(KEY_CONTAINER_NAME, dto.getContainerName());
 
         repository.saveData(data, dto.getReportType(), metaData, getFileName(dto.getContainerName()));
