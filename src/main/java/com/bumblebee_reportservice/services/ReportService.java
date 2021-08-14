@@ -3,16 +3,16 @@ package com.bumblebee_reportservice.services;
 import com.bumblebee_reportservice.repository.ReportRepository;
 import com.bumblebee_reportservice.services.dto.KafkaDto;
 import com.bumblebee_reportservice.services.dto.ReportDto;
+import com.bumblebee_reportservice.services.dto.ReportType;
 import com.bumblebee_reportservice.services.handlers.ReportHandler;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +24,8 @@ public class ReportService {
 
     private final ReportHandler<List<Map<String, List<String>>>, byte[]> reportHandler;
     private final ReportRepository repository;
+    private final String DEFAULT_VALUE = "Report not found, please wait";
+    private static final Logger log = LoggerFactory.getLogger(ReportService.class);
 
     @Autowired
     public ReportService(ReportHandler<List<Map<String, List<String>>>, byte[]> reportHandler,
@@ -33,7 +35,13 @@ public class ReportService {
     }
 
     public void createReport(KafkaDto dto) {
-        byte[] data = reportHandler.buildReport(dto.getData());
+        byte[] data;
+        try {
+            data = reportHandler.buildReport(dto.getData());
+        } catch (IOException e) {
+            log.error("Error generating a report for KafkaDto {} ", dto);
+            return;
+        }
         DBObject metaData = new BasicDBObject();
         metaData.put(KEY_AUTH_FLAG.getValue(), dto.getAuthenticated());
         metaData.put(KEY_CONTAINER_NAME.getValue(), dto.getContainerName());
@@ -42,18 +50,13 @@ public class ReportService {
 
     public ReportDto getReportByCuid(String cuid) throws IOException {
         ReportDto dto = repository.getData(cuid);
-
-        if(StringUtils.isEmpty(dto.getFileName())){
-          // todo возвращаем исключение, что отчет не найден или не готов
-        }
-        if (!dto.isAuth()) {
+        if (dto.getData() == null) {
+            dto.setData(DEFAULT_VALUE.getBytes());
+            dto.setType(ReportType.DEFAULT_TYPE.getMediaType());
+        } else if (!dto.isAuth()) {
             repository.deleteData(cuid);
         }
         return dto;
     }
 
-    private String getFileName(String fileName) {
-        //todo будет нужен при выгрузке
-        return fileName.concat("_").concat(LocalDate.now().toString());
-    }
 }
