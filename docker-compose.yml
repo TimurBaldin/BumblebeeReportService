@@ -1,7 +1,15 @@
-version: '2'
+version: '3.8'
+
+networks:
+ dev:
+  name: dev
+
 services:
  zookeeper:
+  container_name: zookeeper_service
   image: confluentinc/cp-zookeeper:latest
+  networks:
+   - dev
   environment:
    ZOOKEEPER_CLIENT_PORT: 2181
    ZOOKEEPER_TICK_TIME: 2000
@@ -9,9 +17,12 @@ services:
    - 22181:2181
 
  kafka:
+  container_name: kafka_service
   image: confluentinc/cp-kafka:latest
   depends_on:
    - zookeeper
+  networks:
+   - dev
   ports:
    - 29092:29092
   environment:
@@ -24,3 +35,25 @@ services:
    KAFKA_SOCKET_REQUEST_MAX_BYTES: 524288000
    KAFKA_MESSAGE_MAX_BYTES: 524288000
    KAFKA_CFG_MAX_REQUEST_SIZE: 524288000
+
+ mongo:
+    container_name: report_bd
+    image: mongo
+    restart: always
+    networks:
+     - dev
+    ports:
+     - 27017:27017
+    environment:
+     MONGO_INITDB_ROOT_USERNAME: rs
+     MONGO_INITDB_ROOT_PASSWORD: 1
+
+ app:
+  container_name: report_service
+  build:
+   context: .
+   dockerfile: Dockerfile
+  networks:
+    - dev
+  depends_on:
+   - mongo

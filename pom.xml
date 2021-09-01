@@ -10,10 +10,10 @@
 
     <groupId>com</groupId>
     <artifactId>Bumblebee_ReportService</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>Bumblebee_ReportService</name>
-    <description>Demo project for Spring Boot</description>
+    <version>0.0.1</version>
+    <name>report_service</name>
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>11</java.version>
     </properties>
 
@@ -91,6 +91,6 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>${project.name}_${project.version}</finalName>
     </build>
-
 </project>
