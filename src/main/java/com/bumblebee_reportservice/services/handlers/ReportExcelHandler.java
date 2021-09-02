@@ -1,5 +1,6 @@
 package com.bumblebee_reportservice.services.handlers;
 
+import com.bumblebee_reportservice.services.dto.TestDataDto;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -14,14 +15,14 @@ import java.util.List;
 import java.util.Map;
 
 @Component("reportExcelHandler")
-public class ReportExcelHandler implements ReportHandler<List<Map<String, List<String>>>, byte[]> {
+public class ReportExcelHandler implements ReportHandler<List<TestDataDto>, byte[]> {
 
     //TODO Не использовать глобальные объекты, удалить
     private XSSFRow row;
     private XSSFCell cell;
 
     @Override
-    public byte[] buildReport(List<Map<String, List<String>>> data) throws IOException {
+    public byte[] buildReport(List<TestDataDto> data) throws IOException {
         XSSFWorkbook book = new XSSFWorkbook();
         XSSFSheet sheet = book.createSheet();
 
@@ -33,14 +34,9 @@ public class ReportExcelHandler implements ReportHandler<List<Map<String, List<S
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         //пишем заголовки документа
-        for (Map<String, List<String>> value : data) {
-            final int finalRowIndex = cellIndex;
-            value.keySet().forEach(
-                    key -> {
-                        cell = row.createCell(finalRowIndex, CellType.STRING);
-                        cell.setCellValue(key);
-                    }
-            );
+        for (TestDataDto dto : data) {
+            cell = row.createCell(cellIndex, CellType.STRING);
+            cell.setCellValue(dto.getGeneratorName());
             ++cellIndex;
         }
 

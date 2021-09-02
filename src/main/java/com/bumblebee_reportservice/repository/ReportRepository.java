@@ -36,7 +36,7 @@ public class ReportRepository {
 
         if (file.isPresent()) {
             dto.setType(file.get().getMetadata().get(QUERY_KEY_METADATA_REPORT_TYPE.getValue(), String.class));
-            dto.setAuth(file.get().getMetadata().get(KEY_AUTH_FLAG.getValue(), Boolean.class));
+            dto.setAuth(file.get().getMetadata().get(KEY_HISTORY_FLAG.getValue(), Boolean.class));
             dto.setFileName(file.get().getMetadata().get(KEY_CONTAINER_NAME.getValue(), String.class));
             dto.setData(template.getResource(file.get()).getInputStream().readAllBytes());
         }

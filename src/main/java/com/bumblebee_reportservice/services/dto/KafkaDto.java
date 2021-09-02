@@ -6,9 +6,9 @@ import java.util.Map;
 public class KafkaDto {
     private String cuid;
     private String containerName;
-    private Boolean isAuthenticated;
+    private Boolean historyOn;
     private ReportType reportType;
-    private List<Map<String, List<String>>> data;
+    private List<TestDataDto> data;
 
     public String getCuid() {
         return cuid;
@@ -26,12 +26,12 @@ public class KafkaDto {
         this.containerName = containerName;
     }
 
-    public Boolean getAuthenticated() {
-        return isAuthenticated;
+    public Boolean getHistoryOn() {
+        return historyOn;
     }
 
-    public void setAuthenticated(Boolean authenticated) {
-        isAuthenticated = authenticated;
+    public void setHistoryOn(Boolean historyOn) {
+        this.historyOn = historyOn;
     }
 
     public ReportType getReportType() {
@@ -42,21 +42,11 @@ public class KafkaDto {
         this.reportType = reportType;
     }
 
-    public List<Map<String, List<String>>> getData() {
+    public List<TestDataDto> getData() {
         return data;
     }
 
-    public void setData(List<Map<String, List<String>>> data) {
+    public void setData(List<TestDataDto> data) {
         this.data = data;
-    }
-
-    @Override
-    public String toString() {
-        return "KafkaDto{" +
-                "cuid='" + cuid + '\'' +
-                ", containerName='" + containerName + '\'' +
-                ", isAuthenticated=" + isAuthenticated +
-                ", reportType=" + reportType +
-                '}';
     }
 }

@@ -4,6 +4,7 @@ import com.bumblebee_reportservice.repository.ReportRepository;
 import com.bumblebee_reportservice.services.dto.KafkaDto;
 import com.bumblebee_reportservice.services.dto.ReportDto;
 import com.bumblebee_reportservice.services.dto.ReportType;
+import com.bumblebee_reportservice.services.dto.TestDataDto;
 import com.bumblebee_reportservice.services.handlers.ReportHandler;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -14,21 +15,20 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
-import static com.bumblebee_reportservice.services.dto.MetaDataKey.KEY_AUTH_FLAG;
+import static com.bumblebee_reportservice.services.dto.MetaDataKey.KEY_HISTORY_FLAG;
 import static com.bumblebee_reportservice.services.dto.MetaDataKey.KEY_CONTAINER_NAME;
 
 @Service
 public class ReportService {
 
-    private final ReportHandler<List<Map<String, List<String>>>, byte[]> reportHandler;
+    private final ReportHandler<List<TestDataDto>, byte[]> reportHandler;
     private final ReportRepository repository;
     private final String DEFAULT_VALUE = "Report not found, please wait";
     private static final Logger log = LoggerFactory.getLogger(ReportService.class);
 
     @Autowired
-    public ReportService(ReportHandler<List<Map<String, List<String>>>, byte[]> reportHandler,
+    public ReportService(ReportHandler<List<TestDataDto>, byte[]> reportHandler,
                          ReportRepository repository) {
         this.reportHandler = reportHandler;
         this.repository = repository;
@@ -43,7 +43,7 @@ public class ReportService {
             return;
         }
         DBObject metaData = new BasicDBObject();
-        metaData.put(KEY_AUTH_FLAG.getValue(), dto.getAuthenticated());
+        metaData.put(KEY_HISTORY_FLAG.getValue(), dto.getHistoryOn());
         metaData.put(KEY_CONTAINER_NAME.getValue(), dto.getContainerName());
         repository.saveData(data, dto.getReportType(), metaData, dto.getCuid());
     }
