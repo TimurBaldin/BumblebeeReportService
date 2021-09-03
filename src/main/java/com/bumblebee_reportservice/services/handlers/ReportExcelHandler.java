@@ -10,23 +10,18 @@ import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Component("reportExcelHandler")
 public class ReportExcelHandler implements ReportHandler<List<TestDataDto>, byte[]> {
-
-    //TODO Не использовать глобальные объекты, удалить
-    private XSSFRow row;
-    private XSSFCell cell;
 
     @Override
     public byte[] buildReport(List<TestDataDto> data) throws IOException {
         XSSFWorkbook book = new XSSFWorkbook();
         XSSFSheet sheet = book.createSheet();
 
-        row = sheet.createRow(0);
+        XSSFRow row = sheet.createRow(0);
+        XSSFCell cell;
 
         int cellIndex = 0;
         int rowIndex = 1;
@@ -45,14 +40,12 @@ public class ReportExcelHandler implements ReportHandler<List<TestDataDto>, byte
             row = sheet.createRow(rowIndex);
             int value_id = 0;
 
-            for (Map<String, List<String>> value : data) {
+            for (TestDataDto dto : data) {
                 cell = row.createCell(value_id);
                 cell.setCellType(CellType.STRING);
 
-                if (isIndexInCollection(value, i)) {
-                    cell.setCellValue(
-                            new ArrayList<>(value.values()).get(0).get(i)
-                    );
+                if (isIndexInCollection(dto.getData(), i)) {
+                    cell.setCellValue(dto.getData().get(i));
                 } else {
                     cell.setCellValue("");
                 }
@@ -64,22 +57,19 @@ public class ReportExcelHandler implements ReportHandler<List<TestDataDto>, byte
         return baos.toByteArray();
     }
 
-    private int getMaxSize(List<Map<String, List<String>>> data) {
-        //todo упростить
+    private int getMaxSize(List<TestDataDto> data) {
         int max = 0;
-        for (Map<String, List<String>> v : data) {
-            for (Map.Entry<String, List<String>> d : v.entrySet()) {
-                if ((d.getValue().size() - 1 > max)) {
-                    max = d.getValue().size() - 1;
-                }
+        for (TestDataDto dto : data) {
+            if (dto.getData().size() - 1 > max) {
+                max = dto.getData().size() - 1;
             }
         }
         return max;
     }
 
-    private boolean isIndexInCollection(Map<String, List<String>> data, int index) {
-        for (Map.Entry<String, List<String>> d : data.entrySet()) {
-            return d.getValue().size() - 1 >= index;
+    private boolean isIndexInCollection(List<String> data, int index) {
+        if (data.size() - 1 <= index) {
+            return true;
         }
         return false;
     }
